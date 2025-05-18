@@ -1,8 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React,{useEffect, useState} from "react";
+
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useSelector,useDispatch } from "react-redux";
-import { setTextState } from "../redux/Reducers/textStateSlice";
+
+
+//This is a timer component
+const Timer=({min,sec})=>{
+    return (
+        <>
+            <span>{min}</span><span>:</span><span>{sec}</span>
+        </>
+    )
+}
+
 
 //This is a component that renders the Text.
 const Textarea=({textState})=>{
@@ -18,7 +28,7 @@ const Textarea=({textState})=>{
 }
 
 //This is the component the renders the input field and handles the States.
-const Typearea=({startTime, endTime, correct, setCorrect, incorrect, setIncorrect,inputWord, setInputWord, navigate, textState, setTextState, textarray, typedWord, setTypedWord, currentWord, setCurrentWord, wordCount, setWordCount})=>{
+const Typearea=({inputWord, setInputWord, navigate, textState, setTextState, textarray, typedWord, setTypedWord, currentWord, setCurrentWord, wordCount, setWordCount})=>{
     
     //This is a function that changes the CSS class of word at the [wordCount]th index.
     function changeCssClass(wordCount,CSSclass){
@@ -55,21 +65,15 @@ const Typearea=({startTime, endTime, correct, setCorrect, incorrect, setIncorrec
             
             if(value.trim()==currentWord){
                 changeCssClass(wordCount,"green");
-                setCorrect(correct+1);
             }
             else{
                 changeCssClass(wordCount,"red");
-                setIncorrect(incorrect+1);
             }
             
             setInputWord("");
         }
         else if(value.includes(" ") && wordCount==textarray.length){
-            endTime=new Date();
-            console.log(endTime);
-            console.log(startTime);
-            navigate("/result",{state:{startTime: startTime,correct: correct, incorrect: incorrect, endTime: endTime}});
-
+            navigate('/result');
         }
     }
 
@@ -80,37 +84,51 @@ const Typearea=({startTime, endTime, correct, setCorrect, incorrect, setIncorrec
     )
 }
 
-//This is the main function of the page
-const Test=()=>{
-    const navigate = useNavigate();
-    const location = useLocation();
-    const textState = location.state.textState;
-    const textarray = location.state.textarray;
-    console.log(location.state);
-    const [startTime,setStartTime] = useState("");
-    useEffect(()=>{
-        setStartTime(new Date());
-    },[])
-    let endTime = location.state.endTime;
 
-    //The state with all the words from the text and its CSSclasses in and array.
+//This is the main function of the page
+const Timertest=()=>{
+    const navigate = useNavigate();
+    let text = "Racism was not a problem on the Discworld, because—what with trolls and dwarfs and so on—speciesism was more interesting. Black and white lived in perfect harmony and ganged up on green."
+    let textarray = text.split(" ");
+    let textObjArray = textarray.map((t,index)=>{
+        if(index==0){
+            return {id: index,word: t, class: "none", cursorClass: "on"};
+        }
+        return {id: index,word: t, class: "none",cursorClass:"off"};
+    })
+    const [textState,setTextState] = useState(textObjArray);//The state with all the words from the text and its CSSclasses in and array.
     const [inputWord, setInputWord] = useState(""); //The word being typed in the input
     const [typedWord,setTypedWord] = useState(""); //The word submitted/entered after typing
     const [wordCount, setWordCount] = useState(0); //index of the current word
     const [currentWord,setCurrentWord] = useState(textarray[wordCount]); //The current word which is to be typed
-    const [correct, setCorrect] = useState(0);
-    const [incorrect, setIncorrect] = useState(0);
+    const [time, setTime] = useState({min: 1, sec: 10});
+
+    // useEffect(()=>{
+    //     setInterval(()=>timerFunction(time),1000);
+    // },[time]);
     
+    function timerFunction(){
+        console.log(time);  
+        if((time.sec)>=0){
+            let newtime = {...time};
+            newtime.sec -= 1;
+            setTime(newtime);
+        }
+        else if((time.sec)<0){
+            let newtime = {...time};
+            newtime.sec = 59;
+            setTime(newtime);
+        }
+    };
+
     
-    // const getEndTime=()=>{
-    //     navigate("/test",{state:{startTime: startTime, endTime: endTime}});
-    // }
     return(
         <>
+            <Timer min={time.min} sec={time.sec}></Timer>
             <Textarea textState={textState}></Textarea>
-            <Typearea startTime={startTime} correct={correct} setCorrect={setCorrect} incorrect={incorrect} setIncorrect={setIncorrect} endTime={endTime} inputWord={inputWord} setInputWord={setInputWord} textState={textState} setTextState={setTextState} navigate={navigate} textarray={textarray} typedWord={typedWord} setTypedWord={setTypedWord} currentWord={currentWord} setCurrentWord={setCurrentWord} wordCount={wordCount} setWordCount={setWordCount}></Typearea>
-            
+            <Typearea inputWord={inputWord} setInputWord={setInputWord} textState={textState} setTextState={setTextState} navigate={navigate} textarray={textarray} typedWord={typedWord} setTypedWord={setTypedWord} currentWord={currentWord} setCurrentWord={setCurrentWord} wordCount={wordCount} setWordCount={setWordCount}></Typearea>
+            <Link to={"/result"}><button>Done</button></Link>
         </>
     )
 }
-export default Test;
+export default Timertest;
