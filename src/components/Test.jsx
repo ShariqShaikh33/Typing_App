@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import {React, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useSelector,useDispatch } from "react-redux";
 import { setTextState } from "../redux/Reducers/textStateSlice";
+import "../styles/test.css";
 
 //This is a component that renders the Text.
 const Textarea=({textState})=>{
     return (
-        <div>
+        <div className="textMainDiv">
             {
                 textState.map((i)=>{
                     return (<span key={i.id}><span className={i.class+" "+i.cursorClass}>{i.word}</span><span> </span></span>)
@@ -66,16 +66,14 @@ const Typearea=({startTime, endTime, correct, setCorrect, incorrect, setIncorrec
         }
         else if(value.includes(" ") && wordCount==textarray.length){
             endTime=new Date();
-            console.log(endTime);
-            console.log(startTime);
             navigate("/result",{state:{startTime: startTime,correct: correct, incorrect: incorrect, endTime: endTime}});
 
         }
     }
 
     return(
-        <div>
-            <input id="typearea" placeholder={currentWord} autoFocus value={inputWord} onChange={spaceToSubmit}></input>
+        <div className="typeMainDiv">
+            <input className="typeInput" id="typearea" placeholder={currentWord} autoFocus value={inputWord} onChange={spaceToSubmit}></input>
         </div>
     )
 }
@@ -86,7 +84,6 @@ const Test=()=>{
     const location = useLocation();
     const textState = location.state.textState;
     const textarray = location.state.textarray;
-    console.log(location.state);
     const [startTime,setStartTime] = useState("");
     useEffect(()=>{
         setStartTime(new Date());
@@ -101,16 +98,14 @@ const Test=()=>{
     const [correct, setCorrect] = useState(0);
     const [incorrect, setIncorrect] = useState(0);
     
-    
-    // const getEndTime=()=>{
-    //     navigate("/test",{state:{startTime: startTime, endTime: endTime}});
-    // }
     return(
-        <>
-            <Textarea textState={textState}></Textarea>
-            <Typearea startTime={startTime} correct={correct} setCorrect={setCorrect} incorrect={incorrect} setIncorrect={setIncorrect} endTime={endTime} inputWord={inputWord} setInputWord={setInputWord} textState={textState} setTextState={setTextState} navigate={navigate} textarray={textarray} typedWord={typedWord} setTypedWord={setTypedWord} currentWord={currentWord} setCurrentWord={setCurrentWord} wordCount={wordCount} setWordCount={setWordCount}></Typearea>
+        <div className="testParentDiv">
+            <div className="testMainDiv">
+                <Textarea textState={textState}></Textarea>
+                <Typearea startTime={startTime} correct={correct} setCorrect={setCorrect} incorrect={incorrect} setIncorrect={setIncorrect} endTime={endTime} inputWord={inputWord} setInputWord={setInputWord} textState={textState} setTextState={setTextState} navigate={navigate} textarray={textarray} typedWord={typedWord} setTypedWord={setTypedWord} currentWord={currentWord} setCurrentWord={setCurrentWord} wordCount={wordCount} setWordCount={setWordCount}></Typearea>
+            </div>
             
-        </>
+        </div>
     )
 }
 export default Test;

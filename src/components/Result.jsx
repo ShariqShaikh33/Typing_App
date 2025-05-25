@@ -1,44 +1,64 @@
 import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import "../styles/result.css";
 
 const Result=()=>{
     const location = useLocation();
     const startTime = location.state.startTime;
-    console.log(startTime);
     let endTime = location.state.endTime;
     
-    //endTime = new Date();
-    console.log(endTime);
     const correct = location.state.correct;
     const incorrect = location.state.incorrect;
 
     let startsec = new Date(startTime).getTime();
     let endsec = new Date(endTime).getTime();
 
-    let mins = Math.abs(endsec-startsec);
-    let totalsec = (mins/1000).toFixed(0);
+    let milisec = Math.abs(endsec-startsec);
+    let totalsec = (milisec/1000).toFixed(0);
     let totalmin = (totalsec/60).toFixed(2);
 
+    let time = "";
+    if(totalsec>59){
+        let minutes = parseInt((totalsec/60).toFixed(0));
+        console.log("1st iteration: ",minutes);
+        if(minutes<10){
+            minutes="0"+minutes;
+        }
+        let seconds = totalsec - minutes*60;
+        if(seconds<10){
+            seconds="0"+seconds;
+        }
+        time = `${minutes}:${seconds}`;
+    }
+    else{
+        let minutes = 0+""+0;
+        let seconds = totalsec;
+        if(seconds<10){
+            seconds="0"+seconds;
+        }
+        time = `${minutes}:${seconds}`;
+    }
 
-    console.log(totalsec)
-    console.log(totalmin);
+    console.log("Time: ",time);
     console.log("correct: ",correct,);
     console.log("incorrect: ",incorrect);
+    
     let allTypedEntry = correct+incorrect;
-    console.log(allTypedEntry);
+    const wpm = Math.abs((allTypedEntry)/totalmin).toFixed(0);
+    console.log("WPM: ",wpm);
 
-    const wpm = Math.abs((allTypedEntry)/totalmin);
-    console.log(wpm);
-
-    let accuracy = (correct/allTypedEntry)*100+"%";
-    console.log(accuracy);
+    let accuracy = ((correct/allTypedEntry)*100).toFixed(0)+"%";
+    console.log("Accuracy: ",accuracy);
 
 
     return(
-        <>
+        <div className="resultMainDiv">
             <div>Result: </div>
+            <label>WPM: </label><span>{wpm}</span>
+            <label>Accuracy: </label><span>{accuracy}</span>
+            <label>Time: </label><span>{time}</span>
             <Link to={"/"}><button>Done</button></Link>
-        </>
+        </div>
     )
 }
 
