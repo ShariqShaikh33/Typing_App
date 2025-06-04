@@ -5,7 +5,20 @@ const mongoose = require("mongoose");
 const paraRouter = require("./routes/para.route");
 const userRouter = require("./routes/user.route");
 
-app.use(cors({origin: "https://typing-app-virid.vercel.app/"}));
+const allowedOrigins = [
+  'https://typing-app-virid.vercel.app', // production
+  'http://localhost:5173',               // local dev
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
 
 require("dotenv").config();
 
