@@ -21,7 +21,7 @@ function App() {
         let max = 12;
         let min = 1;
         let randomid = (Math.random()*(max-min)+min).toFixed(0);
-        fetchData(`http://localhost:3000/api/id/${randomid}`)
+        fetchData(`https://typing-app-1.onrender.com/api/id/${randomid}`)
         .then((e)=>{
                 let result= e[0].text;
                 setText(result);
