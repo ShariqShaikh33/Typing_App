@@ -52,6 +52,10 @@ const Typearea=({startTime, endTime, correct, setCorrect, incorrect, setIncorrec
             setTypedWord(value);
             setWordCount(wordCount+1);
             setCurrentWord(textarray[wordCount+1]);
+
+            if(wordCount==textarray.length-1){
+                setCurrentWord("Press Space")
+            }
             
             if(value.trim()==currentWord){
                 changeCssClass(wordCount,"green");

@@ -15,12 +15,12 @@ const Result=()=>{
 
     let milisec = Math.abs(endsec-startsec);
     let totalsec = (milisec/1000).toFixed(0);
+    console.log(totalsec, totalsec);
     let totalmin = (totalsec/60).toFixed(2);
 
     let time = "";
     if(totalsec>59){
-        let minutes = parseInt((totalsec/60).toFixed(0));
-        console.log("1st iteration: ",minutes);
+        let minutes = parseInt(Math.floor((totalsec/60)).toFixed(0));
         if(minutes<10){
             minutes="0"+minutes;
         }
@@ -53,10 +53,17 @@ const Result=()=>{
 
     return(
         <div className="resultMainDiv">
-            <div>Result: </div>
-            <label>WPM: </label><span>{wpm}</span>
-            <label>Accuracy: </label><span>{accuracy}</span>
-            <label>Time: </label><span>{time}</span>
+            <div className="mainStatsDiv">
+                <div className="innerStatsDiv">
+                    <label>WPM</label><span>{wpm}</span>
+                </div>
+                <div className="innerStatsDiv">
+                    <label>Accuracy</label><span>{accuracy}</span>
+                </div>
+                <div className="innerStatsDiv">
+                    <label>Time</label><span>{time}</span>
+                </div>
+            </div>
             <Link to={"/"}><button>Done</button></Link>
         </div>
     )
