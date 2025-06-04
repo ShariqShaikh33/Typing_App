@@ -1,7 +1,14 @@
-#root {
+:root {
   margin: 0 auto;
   padding: 0;
   text-align: center;
+
+  
+  --text: #182a18;
+  --background: #bcdba3;
+  --primary: #43d674;
+  --secondary: #40b567;
+  --accent: #80ef80;
 }
 
 .appParentDiv{
@@ -13,9 +20,9 @@
 }
 
 .green{
-  color: green;
+  color: var(--secondary);
 }
 
 .red{
-  color: red;
+  color: #bf3b3b;
 }

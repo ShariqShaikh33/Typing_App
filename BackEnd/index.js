@@ -2,7 +2,8 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
-const router = require("./routes/para.route");
+const paraRouter = require("./routes/para.route");
+const userRouter = require("./routes/user.route");
 
 app.use(cors());
 
@@ -19,7 +20,8 @@ app.get("/",(req,res)=>{
 })
 
 app.use(express.json());
-app.use("/api",router);
+app.use("/api",paraRouter);
+app.use("/user",userRouter);
 
 app.listen(process.env.PORT,()=>{
     console.log(`Server connected to port ${process.env.PORT}`);

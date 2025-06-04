@@ -11,7 +11,7 @@ const Textarea=({textState})=>{
             {
                 textState.map((i)=>{
                     return (<span key={i.id}><span className={i.class+" "+i.cursorClass}>{i.word}</span><span> </span></span>)
-                })
+                }) 
             }
         </div>
     )
@@ -61,6 +61,7 @@ const Typearea=({startTime, endTime, correct, setCorrect, incorrect, setIncorrec
                 changeCssClass(wordCount,"red");
                 setIncorrect(incorrect+1);
             }
+            console.log(textarray[wordCount+1]);
             
             setInputWord("");
         }
@@ -102,7 +103,7 @@ const Test=()=>{
         <div className="testParentDiv">
             <div className="testMainDiv">
                 <Textarea textState={textState}></Textarea>
-                <Typearea startTime={startTime} correct={correct} setCorrect={setCorrect} incorrect={incorrect} setIncorrect={setIncorrect} endTime={endTime} inputWord={inputWord} setInputWord={setInputWord} textState={textState} setTextState={setTextState} navigate={navigate} textarray={textarray} typedWord={typedWord} setTypedWord={setTypedWord} currentWord={currentWord} setCurrentWord={setCurrentWord} wordCount={wordCount} setWordCount={setWordCount}></Typearea>
+                <Typearea startTime={startTime} correct={correct} setCorrect={setCorrect} incorrect={incorrect} setIncorrect={setIncorrect} endTime={endTime} inputWord={inputWord} setInputWord={setInputWord} textState={textState} setTextState={setTextState} navigate={navigate} textarray={textarray} typedWord={typedWord} setTypedWord={setTypedWord} currentWord={currentWord} setCurrentWord={setCurrentWord} wordCount={wordCount} setWordCount={setWordCount} ></Typearea>
             </div>
             
         </div>

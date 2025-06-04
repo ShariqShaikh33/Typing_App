@@ -12,7 +12,7 @@ const paraSchema = new mongoose.Schema({
         trim: true,
         unique: true,
     }
-},{_id: false});
+});
 
 const Paragraph = mongoose.model("paragraphs", paraSchema);
 module.exports = Paragraph;
