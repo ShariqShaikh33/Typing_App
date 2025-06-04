@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const paraRouter = require("./routes/para.route");
 const userRouter = require("./routes/user.route");
 
-app.use(cors());
+app.use(cors({origin: "https://typing-app-virid.vercel.app/"}));
 
 require("dotenv").config();
 
