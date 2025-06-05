@@ -1,4 +1,4 @@
-import {React, useEffect, useState } from "react";
+import {React, useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { setTextState } from "../redux/Reducers/textStateSlice";
@@ -102,6 +102,13 @@ const Test=()=>{
     const [currentWord,setCurrentWord] = useState(textarray[wordCount]); //The current word which is to be typed
     const [correct, setCorrect] = useState(0);
     const [incorrect, setIncorrect] = useState(0);
+
+    useEffect(()=>{
+        const spanel = document.querySelector(".on");
+        if(spanel){
+            spanel.scrollIntoView({behavior: "smooth", block: "center"});
+        }
+    },[currentWord]);
     
     return(
         <div className="testParentDiv">
